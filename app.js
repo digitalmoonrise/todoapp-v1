@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 //use body bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 
-var listItems = [];
+var listItems = ["example 1"];
 
 app.get("/", function(req, res) {
   var today = new Date();
@@ -35,10 +35,7 @@ app.post("/", function(req, res){
   res.redirect("/");
 })
 
-// // //create loop to create new <li>
-// for (var i = 0, i <= listItems.length; i++ ) {
-//   res.write("<li>listItems[i]</li>")
-// };
+
 
 
 app.listen(port, function() {
