@@ -1,14 +1,46 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
+const ejs = require('ejs');
 const port = 8000;
 
+//add ejs
+app.set('view engine', 'ejs');
 
-app.get("/", function(req, res){
-  res.sendFile(__dirname + "/index.html");
+//use body bodyParser
+app.use(bodyParser.urlencoded({extended: true}));
+
+var listItems = [];
+
+app.get("/", function(req, res) {
+  var today = new Date();
+  var options = { weekday: 'long', month: 'long', day: 'numeric' };
+  var day = today.toLocaleString('en-US', options);
+
+
+  res.render('list', {
+    kindOfDay: day,
+    newListItems: listItems
+  });
+
 })
 
+//post route
+app.post("/", function(req, res){
+  console.log(req.body.newItem);
+  var listItem = req.body.newItem;
 
-app.listen(port, function(){
+  listItems.push(listItem);
+
+  res.redirect("/");
+})
+
+// // //create loop to create new <li>
+// for (var i = 0, i <= listItems.length; i++ ) {
+//   res.write("<li>listItems[i]</li>")
+// };
+
+
+app.listen(port, function() {
   console.log("the app is running on " + port);
 })
