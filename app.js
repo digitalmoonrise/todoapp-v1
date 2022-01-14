@@ -9,8 +9,9 @@ app.set('view engine', 'ejs');
 
 //use body bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
 
-var listItems = ["example 1"];
+var listItems = [];
 
 app.get("/", function(req, res) {
   var today = new Date();
@@ -27,7 +28,6 @@ app.get("/", function(req, res) {
 
 //post route
 app.post("/", function(req, res){
-  console.log(req.body.newItem);
   var listItem = req.body.newItem;
 
   listItems.push(listItem);
