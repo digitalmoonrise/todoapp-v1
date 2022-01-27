@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const date = require(__dirname + "/date.js")
 const port = 8000;
+
 
 //add ejs
 app.set('view engine', 'ejs');
@@ -11,15 +13,13 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-var listItems = [];
-let workItems = [];
+const listItems = [];
+const workItems = [];
 
 //home route
 app.get("/", function(req, res) {
-  var today = new Date();
-  var options = { weekday: 'long', month: 'long', day: 'numeric' };
-  var day = today.toLocaleString('en-US', options);
 
+const day = date.getDate();
 
   res.render('list', {
     listTitle: day,
@@ -31,7 +31,6 @@ app.get("/", function(req, res) {
 //post route for home
 app.post("/", function(req, res){
   let listItem = req.body.newItem;
-  console.log(req.body);
 
 //which array to send to
   if (req.body.list === 'Work') {
@@ -45,7 +44,7 @@ app.post("/", function(req, res){
 
 //work route
 app.get("/work", function(req, res) {
-  let work = "Work List";
+  const work = "Work List";
 
   res.render('list', {
     listTitle: work,
